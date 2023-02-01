@@ -1,0 +1,16 @@
+.taskslist {
+  padding-right: 2rem;
+  padding-left: 2rem;
+  border-right: 1px solid;
+  height: 100%;
+
+  .actionContainer {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .taskslistsItems {
+    margin-top: 2rem;
+  }
+}
