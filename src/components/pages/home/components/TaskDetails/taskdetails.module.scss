@@ -1,0 +1,38 @@
+.taskdetails {
+  padding-right: 2rem;
+  padding-left: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .action_container {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .task_view_control_container {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+
+    .task_view_control {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      height: 100%;
+    }
+
+    .task_view_details {
+      flex-grow: 1;
+      height: 90%;
+      width: 100%;
+      padding: 1rem 10rem;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
