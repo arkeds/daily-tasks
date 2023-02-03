@@ -9,6 +9,7 @@ export interface ITask {
   description: string;
   duration: number;
   state: "UNSTARTED" | "STARTED" | "PAUSED" | "ENDED";
+  theme: string;
 }
 
 interface ITaskAction {
@@ -50,7 +51,7 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
             ...state,
             tasks: {
               ...state.tasks,
-              [payload.key]: payload.task,
+              [payload.id]: payload,
             },
           };
         default:
