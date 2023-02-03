@@ -8,6 +8,7 @@ const TaskDetails = () => {
   const { state } = useTaskContext();
 
   const selectedTask = state.selectedTask;
+  const myTasks = Object.values(state.tasks);
   return (
     <Grid item lg={8} className={styles.taskdetails}>
       <div className={styles.action_container}>
@@ -29,7 +30,9 @@ const TaskDetails = () => {
           </IconButton>
         </div>
         <div className={styles.task_view_details}>
-          {selectedTask && <TaskTimer currentTask={selectedTask} />}
+          {myTasks.map((task) => {
+            return <TaskTimer key={task.id} currentTask={task.id} />;
+          })}
         </div>
         <div className={styles.task_view_control}>
           <IconButton>

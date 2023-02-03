@@ -25,12 +25,16 @@ const TaskTimer: FC<IProps> = ({ currentTask }) => {
 
   useEffect(() => {
     reset();
-  }, [currentTask]);
+  }, [currentTask, reset]);
+
+  const displayStatus = currentTask === taskToView.id ? "block" : "none";
   return (
     <Paper
       className={styles.task_timer_container}
       elevation={3}
-      sx={{ backgroundColor: taskToView!.theme ?? "#FFFFFF" }}
+      sx={{
+        backgroundColor: taskToView!.theme ?? "#FFFFFF",
+      }}
     >
       <div className={styles.taskTimerSummary}>
         <div className={styles.summaryElapsed}>
