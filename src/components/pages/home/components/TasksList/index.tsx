@@ -2,12 +2,16 @@ import { Grid, Paper, Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import styles from "./taskslist.module.scss";
 import { useDialogueContext } from "@/components/pages/home/context/DialogContext";
-const TasksList = () => {
+import { ITask, useTaskContext } from "../../context/TasksContext";
+import TaskItem from "./components/TaskItem";
+import { FC } from "react";
+
+const TasksList: FC = () => {
   const { openDialogue } = useDialogueContext();
-  const open = () => {
-    //@ Todo
-    // Toggle Dialogue
-  };
+  const { state: tasksState } = useTaskContext();
+
+  const tasks = Object.values(tasksState.tasks);
+  console.log(tasks);
   return (
     <Grid item lg={4} className={styles.taskslist}>
       <div className={styles.actionContainer}>
@@ -19,7 +23,19 @@ const TasksList = () => {
         Daily Tasks
       </Typography>
 
-      <div className={styles.taskslistsItems}></div>
+      <div className={styles.taskslistsItems}>
+        {tasks.map((task: ITask) => {
+          return (
+            <TaskItem
+              key={task.id}
+              id={task.id}
+              taskDescription={task.description}
+              taskDuration={task.duration}
+              taskTheme={task.theme}
+            />
+          );
+        })}
+      </div>
     </Grid>
   );
 };

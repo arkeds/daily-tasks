@@ -1,0 +1,19 @@
+.task_item_container {
+  margin-top: 1rem;
+  .task_item_actions {
+    display: flex;
+
+    .task_item_duration {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 1rem;
+    }
+
+    .task_item_select {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
