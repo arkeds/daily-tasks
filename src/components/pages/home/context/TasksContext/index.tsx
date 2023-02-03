@@ -33,6 +33,7 @@ const initialState: ITaskState = {
 
 interface ITaskContext {
   state: ITaskState;
+  selectTask: (task: string) => void;
   createTask: (task: ITask) => void;
   startTimer: (taskId: string) => void;
   pauseTimer: (taskId: string) => void;
@@ -54,6 +55,11 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
               [payload.id]: payload,
             },
           };
+        case "SELECT_TASK":
+          return {
+            ...state,
+            selectedTask: payload,
+          };
         default:
           return state;
       }
@@ -73,9 +79,23 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
   const pauseTimer = () => {};
 
   const stopTimer = () => {};
+
+  const selectTask = (taskId: string) => {
+    dispatch({
+      type: "SELECT_TASK",
+      payload: taskId,
+    });
+  };
   return (
     <TaskContext.Provider
-      value={{ state, startTimer, pauseTimer, stopTimer, createTask }}
+      value={{
+        state,
+        startTimer,
+        pauseTimer,
+        stopTimer,
+        createTask,
+        selectTask,
+      }}
     >
       {children}
     </TaskContext.Provider>
