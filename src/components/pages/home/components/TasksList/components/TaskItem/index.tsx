@@ -20,7 +20,7 @@ const TaskItem: FC<IProp> = ({
 }) => {
   const { state: taskState, selectTask } = useTaskContext();
 
-  const elevation = taskState.selectedTask === id ? 24 : 2;
+  const elevation = taskState.selectedTask === id ? 24 : 0;
   return (
     <Paper
       className={styles.task_item_container}
