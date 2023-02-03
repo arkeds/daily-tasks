@@ -25,7 +25,7 @@ const TaskTimer: FC<IProps> = ({ currentTask }) => {
 
   useEffect(() => {
     reset();
-  }, [currentTask, reset]);
+  }, [currentTask]);
 
   const displayStatus = currentTask === taskToView.id ? "block" : "none";
   return (
