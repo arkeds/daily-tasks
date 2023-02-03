@@ -11,7 +11,6 @@ const TasksList: FC = () => {
   const { state: tasksState } = useTaskContext();
 
   const tasks = Object.values(tasksState.tasks);
-  console.log(tasks);
   return (
     <Grid item lg={4} className={styles.taskslist}>
       <div className={styles.actionContainer}>

@@ -2,7 +2,12 @@ import { Button, Grid, IconButton, Paper, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import styles from "./taskdetails.module.scss";
+import { useTaskContext } from "../../context/TasksContext";
+import TaskTimer from "./components/TaskTimer";
 const TaskDetails = () => {
+  const { state } = useTaskContext();
+
+  const selectedTask = state.selectedTask;
   return (
     <Grid item lg={8} className={styles.taskdetails}>
       <div className={styles.action_container}>
@@ -24,16 +29,7 @@ const TaskDetails = () => {
           </IconButton>
         </div>
         <div className={styles.task_view_details}>
-          <Paper
-            sx={{
-              flexGrow: 1,
-              borderRadius: "1rem",
-              padding: "1rem",
-            }}
-            elevation={3}
-          >
-            Task Details
-          </Paper>
+          {selectedTask && <TaskTimer currentTask={selectedTask} />}
         </div>
         <div className={styles.task_view_control}>
           <IconButton>
