@@ -6,6 +6,7 @@ interface IProps {
 
 interface IDialogueState {
   visible: boolean;
+  mode: "CREATE" | "EDIT";
 }
 
 interface IDialogueAction {
@@ -16,11 +17,12 @@ interface IDialogueAction {
 interface IDialogueContext {
   state: IDialogueState;
   closeDialogue: () => void;
-  openDialogue: () => void;
+  openDialogue: (mode: string) => void;
 }
 
 const initialState: IDialogueState = {
   visible: false,
+  mode: "CREATE",
 };
 
 const DialogueContext = createContext<IDialogueContext | null>(null);
@@ -28,12 +30,13 @@ const DialogueContext = createContext<IDialogueContext | null>(null);
 export const DialogueContextProvider: FC<IProps> = ({ children }) => {
   const [state, dispatch] = useReducer(
     (state: IDialogueState, action: IDialogueAction) => {
-      const { type } = action;
+      const { type, payload } = action;
       switch (type) {
         case "OPEN_DIALOGUE":
           return {
             ...state,
             visible: true,
+            mode: payload,
           };
         case "CLOSE_DIALOGUE":
           return {
@@ -54,9 +57,10 @@ export const DialogueContextProvider: FC<IProps> = ({ children }) => {
     });
   };
 
-  const openDialogue = () => {
+  const openDialogue = (mode: string) => {
     dispatch({
       type: "OPEN_DIALOGUE",
+      payload: mode,
     });
   };
   return (

@@ -37,7 +37,7 @@ const TaskDetails = () => {
 
   const onClickEdit = () => {
     if (selectedTask) {
-      openDialogue();
+      openDialogue("EDIT");
     }
   };
 

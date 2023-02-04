@@ -14,7 +14,7 @@ const TasksList: FC = () => {
   return (
     <Grid item lg={4} className={styles.taskslist}>
       <div className={styles.actionContainer}>
-        <IconButton color="primary" onClick={() => openDialogue()}>
+        <IconButton color="primary" onClick={() => openDialogue("CREATE")}>
           <AddIcon fontSize="large" />
         </IconButton>
       </div>

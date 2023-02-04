@@ -6,7 +6,7 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useDialogueContext } from "../../context/DialogContext";
 import { ITask, useTaskContext } from "../../context/TasksContext";
 import { v4 } from "uuid";
@@ -14,13 +14,15 @@ import { useForm } from "react-hook-form";
 
 interface IFormTask {
   description: string;
-  duration: number;
+  duration: number | string;
   theme: string;
 }
 
 const TaskDialogue: FC = () => {
   const { state, closeDialogue } = useDialogueContext();
-  const { createTask } = useTaskContext();
+  const { state: taskState, createTask } = useTaskContext();
+  const selectedTask = taskState.selectedTask as string;
+
   const {
     register,
     handleSubmit,
@@ -28,12 +30,30 @@ const TaskDialogue: FC = () => {
     formState: { isValid },
   } = useForm<IFormTask>();
 
+  useEffect(() => {
+    if (state.mode === "EDIT") {
+      const taskToEdit = taskState.tasks[selectedTask];
+      reset({
+        description: taskToEdit.description,
+        duration: taskToEdit.duration,
+        theme: taskToEdit.theme,
+      });
+    } else {
+      reset({
+        description: "",
+        duration: "",
+        theme: "#4d708f",
+      });
+    }
+  }, [state.mode, taskState.selectedTask]);
+
   const onSubmit = (data: IFormTask) => {
     const key = v4();
+    const duration = parseInt(data.duration as string);
     const task: ITask = {
       id: key,
       description: data.description,
-      duration: data.duration,
+      duration: duration,
       state: "UNSTARTED",
       theme: data.theme,
     };
