@@ -20,7 +20,7 @@ interface IFormTask {
 
 const TaskDialogue: FC = () => {
   const { state, closeDialogue } = useDialogueContext();
-  const { state: taskState, createTask } = useTaskContext();
+  const { state: taskState, createTask, updateTask } = useTaskContext();
   const selectedTask = taskState.selectedTask as string;
 
   const {
@@ -48,16 +48,28 @@ const TaskDialogue: FC = () => {
   }, [state.mode, taskState.selectedTask]);
 
   const onSubmit = (data: IFormTask) => {
-    const key = v4();
-    const duration = parseInt(data.duration as string);
-    const task: ITask = {
-      id: key,
-      description: data.description,
-      duration: duration,
-      state: "UNSTARTED",
-      theme: data.theme,
-    };
-    createTask(task);
+    if (state.mode === "EDIT") {
+      const duration = parseInt(data.duration as string);
+      updateTask(selectedTask, {
+        description: data.description,
+        duration: duration,
+        theme: data.theme,
+        id: selectedTask,
+        state: "STARTED",
+      });
+    } else {
+      const key = v4();
+      const duration = parseInt(data.duration as string);
+      const task: ITask = {
+        id: key,
+        description: data.description,
+        duration: duration,
+        state: "UNSTARTED",
+        theme: data.theme,
+      };
+      createTask(task);
+    }
+
     reset();
     closeDialogue();
   };

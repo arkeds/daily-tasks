@@ -38,6 +38,7 @@ interface ITaskContext {
   startTimer: (taskId: string) => void;
   pauseTimer: (taskId: string) => void;
   stopTimer: (taskId: string) => void;
+  updateTask: (taskId: string, taskData: ITask) => void;
 }
 
 const TaskContext = createContext<ITaskContext | null>(null);
@@ -61,6 +62,20 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
             ...state,
             selectedTask: payload,
           };
+        case "UPDATE_TASK": {
+          return {
+            ...state,
+            tasks: {
+              ...state.tasks,
+              [payload.taskId]: {
+                ...state.tasks[payload.taskId],
+                description: payload.description,
+                duration: payload.duration,
+                theme: payload.theme,
+              },
+            },
+          };
+        }
         default:
           return state;
       }
@@ -87,6 +102,18 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
       payload: taskId,
     });
   };
+
+  const updateTask = (taskId: string, data: ITask) => {
+    dispatch({
+      type: "UPDATE_TASK",
+      payload: {
+        taskId: taskId,
+        description: data.description,
+        duration: data.duration,
+        theme: data.theme,
+      },
+    });
+  };
   return (
     <TaskContext.Provider
       value={{
@@ -96,6 +123,7 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
         stopTimer,
         createTask,
         selectTask,
+        updateTask,
       }}
     >
       {children}
