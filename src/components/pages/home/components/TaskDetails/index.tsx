@@ -5,9 +5,10 @@ import styles from "./taskdetails.module.scss";
 import { useTaskContext } from "../../context/TasksContext";
 import TaskTimer from "./components/TaskTimer";
 import { useEffect, useState } from "react";
+import { useDialogueContext } from "../../context/DialogContext";
 const TaskDetails = () => {
   const { state, selectTask } = useTaskContext();
-
+  const { openDialogue } = useDialogueContext();
   const taskIds = Object.keys(state.tasks);
   const myTasks = Object.values(state.tasks);
 
@@ -23,16 +24,22 @@ const TaskDetails = () => {
     let nextIndex = selectedTaskIndex + 1;
 
     if (prevIndex < 0) {
-      prevIndex = 0;
+      prevIndex = taskIds.length - 1;
     }
 
     if (nextIndex > taskIds.length - 1) {
-      nextIndex = taskIds.length - 1;
+      nextIndex = 0;
     }
 
     setPrevTask(taskIds[prevIndex]);
     setNextTask(taskIds[nextIndex]);
   }, [selectedTaskIndex, taskIds]);
+
+  const onClickEdit = () => {
+    if (selectedTask) {
+      openDialogue();
+    }
+  };
 
   return (
     <Grid item lg={8} className={styles.taskdetails}>
@@ -40,6 +47,8 @@ const TaskDetails = () => {
         <Button
           variant="text"
           color="primary"
+          onClick={() => onClickEdit()}
+          disabled={!selectedTask}
           sx={{
             fontWeight: 700,
             fontSize: "1.25rem",
