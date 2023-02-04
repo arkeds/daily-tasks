@@ -7,14 +7,14 @@ const useStopwatch = (seconds: number) => {
 
   useEffect(() => {
     if (timeLeft === 0) {
-      pauseTimer();
       clearInterval(intervalId);
+      pauseTimer();
       return;
     }
 
     const interval = setInterval(() => {
       if (!isPaused) {
-        setTimeLeft((timeLeft) => timeLeft - 1);
+        setTimeLeft((time) => time - 0.5);
       }
     }, 1000);
     setIntervalId(interval);
@@ -33,6 +33,7 @@ const useStopwatch = (seconds: number) => {
   };
 
   const reset = () => {
+    clearInterval(intervalId);
     pauseTimer();
     setTimeLeft(seconds);
   };

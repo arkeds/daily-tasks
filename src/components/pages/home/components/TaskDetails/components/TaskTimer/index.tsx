@@ -18,22 +18,22 @@ const TaskTimer: FC<IProps> = ({ currentTask }) => {
   const { state } = useTaskContext();
 
   const taskToView: ITask = state!.tasks[currentTask];
+  const selectedTask = state!.selectedTask;
 
   const duration = taskToView.duration * 60;
 
   const { seconds, pauseTimer, playTimer, reset } = useStopwatch(duration);
 
-  useEffect(() => {
-    reset();
-  }, [currentTask]);
-
-  const displayStatus = currentTask === taskToView.id ? "block" : "none";
+  const displayStatus = currentTask === selectedTask ? "flex" : "none";
   return (
     <Paper
       className={styles.task_timer_container}
       elevation={3}
       sx={{
         backgroundColor: taskToView!.theme ?? "#FFFFFF",
+      }}
+      style={{
+        display: displayStatus,
       }}
     >
       <div className={styles.taskTimerSummary}>

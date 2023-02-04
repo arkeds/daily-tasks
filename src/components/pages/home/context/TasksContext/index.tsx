@@ -54,6 +54,7 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
               ...state.tasks,
               [payload.id]: payload,
             },
+            selectedTask: payload.id,
           };
         case "SELECT_TASK":
           return {
