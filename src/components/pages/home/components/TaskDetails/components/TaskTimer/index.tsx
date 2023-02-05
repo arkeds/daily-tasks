@@ -25,6 +25,10 @@ const TaskTimer: FC<IProps> = ({ currentTask }) => {
   const { seconds, pauseTimer, playTimer, reset } = useStopwatch(duration);
 
   const displayStatus = currentTask === selectedTask ? "flex" : "none";
+
+  useEffect(() => {
+    reset();
+  }, [taskToView.duration]);
   return (
     <Paper
       className={styles.task_timer_container}
