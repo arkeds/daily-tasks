@@ -11,6 +11,7 @@ import { useDialogueContext } from "../../context/DialogContext";
 import { ITask, useTaskContext } from "../../context/TasksContext";
 import { v4 } from "uuid";
 import { useForm } from "react-hook-form";
+import { Container } from "@mui/system";
 
 interface IFormTask {
   description: string;
@@ -20,7 +21,12 @@ interface IFormTask {
 
 const TaskDialogue: FC = () => {
   const { state, closeDialogue } = useDialogueContext();
-  const { state: taskState, createTask, updateTask } = useTaskContext();
+  const {
+    state: taskState,
+    createTask,
+    updateTask,
+    removeTask,
+  } = useTaskContext();
   const selectedTask = taskState.selectedTask as string;
 
   const {
@@ -74,9 +80,31 @@ const TaskDialogue: FC = () => {
     closeDialogue();
   };
 
+  const onClickDeleteTask = (task: string) => {
+    removeTask(task);
+    closeDialogue();
+  };
+
   return (
     <Dialog open={state.visible}>
       <DialogTitle>Configure Task</DialogTitle>
+      {state.mode === "EDIT" && (
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => onClickDeleteTask(selectedTask)}
+          >
+            Delete
+          </Button>
+        </Container>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           <TextField

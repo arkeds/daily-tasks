@@ -39,6 +39,7 @@ interface ITaskContext {
   pauseTimer: (taskId: string) => void;
   stopTimer: (taskId: string) => void;
   updateTask: (taskId: string, taskData: ITask) => void;
+  removeTask: (taskId: string) => void;
 }
 
 const TaskContext = createContext<ITaskContext | null>(null);
@@ -76,6 +77,17 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
             },
           };
         }
+        case "REMOVE_TASK": {
+          const tasks = state.tasks;
+          delete tasks[payload];
+
+          const newSelectedTask = Object.keys(tasks)[0];
+          return {
+            ...state,
+            tasks: tasks,
+            selectedTask: newSelectedTask,
+          };
+        }
         default:
           return state;
       }
@@ -103,6 +115,13 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
     });
   };
 
+  const removeTask = (taskId: string) => {
+    dispatch({
+      type: "REMOVE_TASK",
+      payload: taskId,
+    });
+  };
+
   const updateTask = (taskId: string, data: ITask) => {
     dispatch({
       type: "UPDATE_TASK",
@@ -124,6 +143,7 @@ export const TaskContextProvider: FC<IProps> = ({ children }) => {
         createTask,
         selectTask,
         updateTask,
+        removeTask,
       }}
     >
       {children}
